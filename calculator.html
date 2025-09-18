@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2575fc;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            text-align: left;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #2575fc;
+            outline: none;
+        }
+        
+        button {
+            background: #2575fc;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            background: #1c64e0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .result h3 {
+            color: #2575fc;
+            margin-bottom: 10px;
+        }
+        
+        .calculation {
+            font-size: 1.2rem;
+            color: #333;
+            margin: 15px 0;
+        }
+        
+        .square {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6a11cb;
+            margin: 10px 0;
+        }
+        
+        .error {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .error.visible {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Square Calculator</h1>
+        <p class="description">Enter a number between 1 and 10 to calculate its square value.</p>
+        
+        <div class="input-group">
+            <label for="numberInput">Enter a number (1-10):</label>
+            <input type="number" id="numberInput" min="1" max="10" placeholder="Enter a number">
+            <p id="errorMessage" class="error">Please enter a valid number between 1 and 10.</p>
+        </div>
+        
+        <button onclick="calculateSquare()">Calculate Square</button>
+        
+        <div id="result" class="result">
+            <h3>Calculation Result</h3>
+            <p class="calculation">You entered: <span id="inputValue"></span></p>
+            <p class="calculation">Square calculation:</p>
+            <p class="calculation"><span id="inputValue2"></span> × <span id="inputValue3"></span> = </p>
+            <p class="square" id="squareValue"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateSquare() {
+            // Get input value
+            const input = document.getElementById('numberInput');
+            const value = parseInt(input.value);
+            
+            // Get DOM elements
+            const errorMessage = document.getElementById('errorMessage');
+            const result = document.getElementById('result');
+            const inputValue = document.getElementById('inputValue');
+            const inputValue2 = document.getElementById('inputValue2');
+            const inputValue3 = document.getElementById('inputValue3');
+            const squareValue = document.getElementById('squareValue');
+            
+            // Validate input
+            if (isNaN(value) || value < 1 || value > 10) {
+                errorMessage.classList.add('visible');
+                result.classList.remove('visible');
+                return;
+            }
+            
+            // Hide error message if shown
+            errorMessage.classList.remove('visible');
+            
+            // Calculate square
+            const square = value * value;
+            
+            // Display result
+            inputValue.textContent = value;
+            inputValue2.textContent = value;
+            inputValue3.textContent = value;
+            squareValue.textContent = square;
+            
+            // Show result
+            result.classList.add('visible');
+        }
+        
+        // Allow pressing Enter to calculate
+        document.getElementById('numberInput').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                calculateSquare();
+            }
+        });
+    </script>
+</body>
+</html>
